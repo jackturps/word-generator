@@ -45,7 +45,7 @@ class WordGenerator:
                 prob = tokens[1]
 
                 if prev_char not in self.probs:
-                    self.probs[prev_char] = NameGenerator.ProbabilityElement()
+                    self.probs[prev_char] = WordGenerator.ProbabilityElement()
                 self.probs[prev_char].chars.append(curr_char)
                 self.probs[prev_char].probs.append(float(prob))
 
