@@ -4,9 +4,9 @@ import sys
 
 
 def default_viability_func(generated_word):
-    min_length = 3
+    min_length = 4
     max_length = 10
-    max_consonant_string = 3
+    max_consonant_string = 2
     vowels = ['a', 'e', 'i', 'o', 'u', 'y']
 
     unviable = False
@@ -22,6 +22,9 @@ def default_viability_func(generated_word):
     consonant_strings = re.findall(r'[^aeiou]+', generated_word)
     unviable = unviable or not consonant_strings
     unviable = unviable or len(max(consonant_strings, key=len)) > max_consonant_string
+
+    # Check that no more than 2 sequential characters appear in a row.
+    unviable = unviable or re.search(r'(.)\1\1', generated_word)
 
     return not unviable
 
@@ -89,5 +92,5 @@ if __name__ == '__main__':
     input_path = sys.argv[1]
 
     generator = WordGenerator(input_path)
-    for _ in range(30):
-        print(generator.generate_name())
+    words = [generator.generate_name() for _ in range(50)]
+    print(', '.join(words))
